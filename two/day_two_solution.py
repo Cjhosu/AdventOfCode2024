@@ -1,57 +1,33 @@
-unsafe_counter = 0
 safe_counter = 0
 
-def ascender(report, retry):
-    global unsafe_counter
-    global safe_counter
-    print("ascender")
-    print(report)
-    for index in range(1, len(report)):
-        level = int(report[index])
-        previous_level = int(report[index -1])
-        difference = abs(int(level) - int(previous_level))
-        if level < previous_level or difference == 0 or difference > 3:
-            if not retry:
-               print("del meth")
-               del report[index - 1]
-               ascender(report, True)
-            else:
-                print("unsafe")
-                unsafe_counter += 1
-                return
-            return
-    print("safe")
-    safe_counter += 1
+def is_safe(levels):
+    increase = levels[len(levels) -1] > levels[0]
+    if increase:
+        for i in range(1, len(levels)):
+            diff = levels[i] - levels[i - 1]
+            if not 1 <= diff <= 3:
+                return False
+        return True
+    else:
+        for i in range(1, len(levels)):
+            diff = levels[i] - levels[i - 1]
+            if not -3 <= diff <= -1:
+                return False
+        return True
 
-def descender(report, retry):
-    global unsafe_counter
-    global safe_counter
-    print("decender")
-    print(report)
-    for index in range(1, len(report)):
-        level = int(report[index])
-        previous_level = int(report[index -1])
-        difference = abs(int(level) - int(previous_level))
-        if level > previous_level or difference == 0 or difference > 3:
-            if not retry:
-               print("del meth")
-               del report[index - 1]
-               descender(report, True)
-            else:
-                print("unsafe")
-                unsafe_counter += 1
-                return
-            return
-    print("safe")
-    safe_counter += 1
+def is_really_safe(levels):
+    if is_safe(levels):
+        return True
+    for i in range(len(levels)):
+        if is_safe(levels[:i] + levels[i+1:]):
+            return True
+    return False
 
 with open('day_two_input') as file:
     for line in file:
         line = line.strip()
         report = line.split(' ')
-        if int(report[0]) < int(report[len(report) - 1]):
-            ascender(report, False)
-        elif int(report[0]) > int(report[len(report) - 1]):
-            descender(report, False)
+        levels = [int(i) for i in report]
+        safe_counter += is_really_safe(levels)
 
 print(safe_counter)
