@@ -1,7 +1,8 @@
 safe_counter = 0
 
+
 def is_safe(levels):
-    increase = levels[len(levels) -1] > levels[0]
+    increase = levels[len(levels) - 1] > levels[0]
     if increase:
         for i in range(1, len(levels)):
             diff = levels[i] - levels[i - 1]
@@ -15,6 +16,7 @@ def is_safe(levels):
                 return False
         return True
 
+
 def is_really_safe(levels):
     if is_safe(levels):
         return True
@@ -22,6 +24,7 @@ def is_really_safe(levels):
         if is_safe(levels[:i] + levels[i+1:]):
             return True
     return False
+
 
 with open('day_two_input') as file:
     for line in file:

@@ -28,7 +28,7 @@ with open('day_three_input') as file:
                 try:
                     nums = [int(i) for i in just_num.split(",")]
                     total += (nums[0] * nums[1])
-                except:
+                except exception:
                     pass
 
 print(total)

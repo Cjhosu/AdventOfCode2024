@@ -3,14 +3,14 @@ right = []
 
 with open('day_one_input') as file:
     for line in file:
-       line = line.strip('\n')
-       pair = line.split('   ')
-       left.append(pair[0])
-       right.append(pair[1])
+        line = line.strip('\n')
+        pair = line.split('   ')
+        left.append(pair[0])
+        right.append(pair[1])
 
 total = 0
 for n in range(len(left)):
-    ele  = left[n]
+    ele = left[n]
     curcount = right.count(ele)
     total += int(ele) * curcount
 print(total)
