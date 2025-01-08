@@ -32,3 +32,5 @@ with open('day_three_input') as file:
                     pass
 
 print(total)
+
+
